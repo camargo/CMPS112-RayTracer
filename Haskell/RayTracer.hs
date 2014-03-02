@@ -7,7 +7,6 @@ import Vec3
 import Ray
 import Sphere
 import Light
-import Data.List (find)
 import Data.Maybe (fromJust)
 
 sphere1 :: Sphere -- 1st sphere.
@@ -27,8 +26,8 @@ trace x y = if s == Nothing
 			then (0.0, 0.0, 0.0)
 			else phong (fromJust s) (p) (normal (fromJust s) p)
 			where
-				s = getsphere x y spheres
-				p = getIntersection (getRay x y) (getVal x y (fromJust (getsphere x y spheres)))
+				s = getSphere x y spheres
+				p = getIntersection (getRay x y) (getVal x y (fromJust (getSphere x y spheres)))
 
 pixels :: [(Float, Float, Float)] -- Trace each pixel.
 pixels = [(trace x y) | x <- [0..511], y <- [0..511]]

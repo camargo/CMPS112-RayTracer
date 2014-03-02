@@ -6,7 +6,6 @@
 -- Sphere module declaration.
 module Sphere
 ( Sphere (Sphere)
-, spheres
 , center
 , radius
 , diff
@@ -14,6 +13,9 @@ module Sphere
 , spec
 , shine
 , squaredRad
+, isectBool
+, getSphere
+, getVal
 , normal
 , le
 , tca
@@ -24,6 +26,7 @@ module Sphere
 
 import Vec3
 import Ray
+import Data.List (find)
 
 -- Sphere with center and radius. Also includes color data.
 data Sphere = Sphere { center :: Vec3, radius :: Float, diff :: Vec3, ambient :: Vec3, spec :: Vec3, shine :: Float } deriving (Show, Eq)
@@ -34,8 +37,8 @@ squaredRad sphere = (radius sphere) * (radius sphere)
 isectBool :: Int -> Int -> Sphere -> Bool -- Returns true if there is an intersection, false otherwise.
 isectBool x y s = if (intersect (getRay x y) s) > 0.0 then True else False
 
-getsphere :: Int -> Int -> [Sphere] -> Maybe Sphere -- Returns a sphere if it intersects a ray.
-getsphere x y s = find (isectBool x y) s
+getSphere :: Int -> Int -> [Sphere] -> Maybe Sphere -- Returns a sphere if it intersects a ray.
+getSphere x y s = find (isectBool x y) s
 
 getVal :: Int -> Int -> Sphere -> Float -- Returns the value of the rays parameter at an intersection.
 getVal x y s = (intersect (getRay x y) s)
